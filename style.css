@@ -18,8 +18,8 @@ body {
 }
 header {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    
     padding: 50px 15px 15px;
 }
 header input {
@@ -44,6 +44,13 @@ header input:hover {
 header input:focus {
     background-color:  rgba(255, 255, 255, 0.6);
 }
+.search-box {
+    margin-left: 450px;
+}
+.search-box1 {
+    margin-left: 80px; 
+     
+}
 
 main {
     flex : 5 3 100%;
@@ -61,6 +68,12 @@ main {
     margin-bottom: 5px;
 }
 
+.location .date {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
 
 
 .current .temp {

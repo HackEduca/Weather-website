@@ -8,7 +8,7 @@ if (navigator.geolocation) { //check if geolocation is available
       getCurrentresults(position);
     });   
 }
-function getCurrentresults(place) {
+function getCurrentresults(place) {    //to fetch the weather using latitude and longitude
   fetch(`${api.base}weather?lat=${place.coords.latitude}&lon=${place.coords.longitude}&units=metric&APPID=${api.key}`)
   .then(function(cresp) {
     return cresp.json();
@@ -23,12 +23,12 @@ const searchbox = document.querySelector('.search-box');
 searchbox.addEventListener('keypress', setQuery);
 
 
-function setQuery(evt) {
+function setQuery(evt) {       //pass the input location entered by the user
     if (evt.keyCode == 13) {
       getResults(searchbox.value);
     }
   }
-function getResults(query) {
+function getResults(query) {        //to fetch the waether using location name
     fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     .then(function(resp) {
         return resp.json();
@@ -40,7 +40,7 @@ function getResults(query) {
 }
 
 
-function displayResults (weather) {
+function displayResults (weather) {    //to display the weather of desired location
     
     let city = document.querySelector('.location .city');
     city.innerText = `${weather.name}, ${weather.sys.country}`;
@@ -64,12 +64,10 @@ function displayResults (weather) {
     let humi = document.querySelector('.current .humi');
     humi.innerHTML = `<span>Humidity ~ </span>${weather.main.humidity}`;
     
-    console.log(weather);
-    
     getPrevious(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
 }
 
-function dateBuilder (d) {
+function dateBuilder (d) {     //to get the date of current day
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
@@ -81,7 +79,7 @@ function dateBuilder (d) {
     return `${day} ${date} ${month} ${year}`;
   }
 
-  function getPrevious(latc, longc, predate) {
+  function getPrevious(latc, longc, predate) {    //to fetch weather of previous days
      
      fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latc}&lon=${longc}&dt=${predate}&appid=${api.key}`)
      .then(function(aresp) {

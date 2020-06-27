@@ -3,19 +3,33 @@ const api = {
     base: "https://api.openweathermap.org/data/2.5/"
   }
 
+if (navigator.geolocation) { //check if geolocation is available
+    navigator.geolocation.getCurrentPosition(function(position){
+      getCurrentresults(position);
+    });   
+}
+function getCurrentresults(place) {
+  fetch(`${api.base}weather?lat=${place.coords.latitude}&lon=${place.coords.longitude}&units=metric&APPID=${api.key}`)
+  .then(function(cresp) {
+    return cresp.json();
+  })
+  .then(function(cdata) {
+    displayResults(cdata);
+  })
+  .catch(function() {});
+}
+
 const searchbox = document.querySelector('.search-box');
 searchbox.addEventListener('keypress', setQuery);
 
-const searchbox1 = document.querySelector('.search-box1');
-searchbox1.addEventListener('keypress', setQuery);
 
 function setQuery(evt) {
     if (evt.keyCode == 13) {
-      getResults(searchbox.value,searchbox1.value);
+      getResults(searchbox.value);
     }
   }
-function getResults(query,queryl) {
-    fetch(`${api.base}weather?lat=${query}&lon=${queryl}&units=metric&APPID=${api.key}`)
+function getResults(query) {
+    fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     .then(function(resp) {
         return resp.json();
     })
@@ -31,6 +45,9 @@ function displayResults (weather) {
     let city = document.querySelector('.location .city');
     city.innerText = `${weather.name}, ${weather.sys.country}`;
 
+    let cord = document.querySelector('.location .cord');
+    cord.innerHTML = `${weather.coord.lat}°N , ${weather.coord.lon}°E`;
+
     let now = new Date();
     let date = document.querySelector('.location .date');
     date.innerText = dateBuilder(now);
@@ -38,13 +55,18 @@ function displayResults (weather) {
     let temp = document.querySelector('.current .temp');
     temp.innerHTML = `${Math.round(weather.main.temp)}<span>°C</span>`;
 
-    let weather_el = document.querySelector('.current .weather');
-    weather_el.innerText = weather.weather[0].main;
+    let type = document.querySelector('.current .type');
+    type.innerText = weather.weather[0].main;
 
     let vary = document.querySelector('.current .vary');
     vary.innerText = `${Math.round(weather.main.temp_max)}°C / ${Math.round(weather.main.temp_min)}°C`;
 
+    let humi = document.querySelector('.current .humi');
+    humi.innerHTML = `<span>Humidity ~ </span>${weather.main.humidity}`;
+    
     console.log(weather);
+    
+    getPrevious(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
 }
 
 function dateBuilder (d) {
@@ -58,3 +80,16 @@ function dateBuilder (d) {
   
     return `${day} ${date} ${month} ${year}`;
   }
+
+  function getPrevious(latc, longc, predate) {
+     
+     fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latc}&lon=${longc}&dt=${predate}&appid=${api.key}`)
+     .then(function(aresp) {
+       return aresp.json();
+     })
+     .then(function(predata) {
+       displayXresults(predata);
+     })
+     .catch(function() {});
+  }
+

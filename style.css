@@ -1,10 +1,9 @@
-* {
+
+
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     background-image: url(background.jpg);
     background-size: cover;
@@ -18,8 +17,8 @@ body {
 }
 header {
     display: flex;
-    
-    
+    justify-content: center;
+    align-items: center;
     padding: 50px 15px 15px;
 }
 header input {
@@ -44,13 +43,7 @@ header input:hover {
 header input:focus {
     background-color:  rgba(255, 255, 255, 0.6);
 }
-.search-box {
-    margin-left: 450px;
-}
-.search-box1 {
-    margin-left: 80px; 
-     
-}
+
 
 main {
     flex : 5 3 100%;
@@ -70,6 +63,13 @@ main {
 
 .location .date {
     color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.location .cord {
+    color: #fff;
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 5px;
@@ -84,7 +84,7 @@ main {
     text-shadow: 2px 6px rgba(0, 0, 0, 0.6);
 }
 
-.current .weather {
+.current .type {
     color: #fff;
     font-size: 26px;
     font-weight: 500;
@@ -93,6 +93,13 @@ main {
     text-shadow: 0px 3px rgba(49, 46, 46, 0.3);
 }
 .current .vary {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: oblique;
+}
+
+.current .humi {
     color: #fff;
     font-size: 18px;
     font-weight: 400;

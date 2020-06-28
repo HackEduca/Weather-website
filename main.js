@@ -48,46 +48,64 @@ function displayResults (weather) {    //to display the weather of desired locat
     let cord = document.querySelector('.location .cord');
     cord.innerHTML = `${weather.coord.lat}°N , ${weather.coord.lon}°E`;
 
-    let now = new Date();
+    let today = new Date();
     let date = document.querySelector('.location .date');
-    date.innerText = dateBuilder(now);
+    date.innerText = dateBuilder(today);
 
     let temp = document.querySelector('.current .temp');
-    temp.innerHTML = `${Math.round(weather.main.temp)}<span>°C</span>`;
+    temp.innerHTML = `${weather.main.temp}<span>°C</span>`;
 
     let type = document.querySelector('.current .type');
     type.innerText = weather.weather[0].main;
 
     let vary = document.querySelector('.current .vary');
-    vary.innerText = `${Math.round(weather.main.temp_max)}°C / ${Math.round(weather.main.temp_min)}°C`;
+    vary.innerText = `${weather.main.temp_max}°C / ${weather.main.temp_min}°C`;
 
     let humi = document.querySelector('.current .humi');
     humi.innerHTML = `<span>Humidity ~ </span>${weather.main.humidity}`;
+
+    
     
     getPrevious(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+
 }
 
-function dateBuilder (d) {     //to get the date of current day
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
-  
-    return `${day} ${date} ${month} ${year}`;
-  }
-
-  function getPrevious(latc, longc, predate) {    //to fetch weather of previous days
-     
-     fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latc}&lon=${longc}&dt=${predate}&appid=${api.key}`)
-     .then(function(aresp) {
-       return aresp.json();
+  function getPrevious(latp, longp, predate) {    //to fetch weather of previous days
+     predate = (predate - 86400);
+     fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latp}&lon=${longp}&dt=${predate}&units=metric&appid=${api.key}`)
+     .then(function(presp) {
+       return presp.json();
      })
      .then(function(predata) {
+       
        displayXresults(predata);
      })
      .catch(function() {});
   }
+
+  function displayXresults(xweather) {            //to display weather of previous days
+    
+    let predate = document.querySelector('.previous .predate');
+    predate.innerText = 'Yesterday';
+
+    let prevary = document.querySelector('.previous .prevary');
+    prevary.innerHTML = `${xweather.hourly[0].temp}°C / ${xweather.hourly[23].temp}°C`;
+    
+    let pretype = document.querySelector('.previous .pretype');
+    pretype.innerHTML = `${xweather.current.weather[0].main}`;
+
+    
+  }
+
+function dateBuilder (d) {     //to get the date of current day
+  let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  let day = days[d.getDay()];
+  let date = d.getDate();
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`;
+}
 

@@ -56,14 +56,14 @@ main {
 
 .location .city {
     color: #fff;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 500;
     margin-bottom: 5px;
 }
 
 .location .date {
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     margin-bottom: 5px;
 }
@@ -101,8 +101,37 @@ main {
 
 .current .humi {
     color: #fff;
+    padding: 5px;
     font-size: 18px;
     font-weight: 400;
     font-style: oblique;
+}
+
+.previous {
+    align-items: left;
+    margin-right: 800px;
+    padding: 8px;
+    color: rgb(226, 216, 216);
+    
+}
+
+.previous .predate {
+    font-size: 50px;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.previous .pretype {
+    padding: 10px;
+    font-style: oblique;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.previous .prevary {
+    padding: 10px;
+    font-style: oblique;
+    font-size: 32px;
+    font-weight: 500;
 }
 

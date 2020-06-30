@@ -3,6 +3,7 @@ const api = {
     base: "https://api.openweathermap.org/data/2.5/"
   }
 
+
 if (navigator.geolocation) { //check if geolocation is available
     navigator.geolocation.getCurrentPosition(function(position){
       getCurrentresults(position);
@@ -42,7 +43,48 @@ function getResults(query) {        //to fetch the waether using location name
 
 
 function displayResults (weather) {    //to display the weather of desired location
-    
+
+    if(weather.weather[0].main === 'Clouds'){
+      document.body.style.background = "url('pics/clouds.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Clear'){
+      document.body.style.background = "url('pics/clear.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Rain'){
+      document.body.style.background = "url('pics/rain.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Haze'){
+      document.body.style.background = "url('pics/haze.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Snow'){
+      document.body.style.background = "url('pics/snow.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Thunderstorm'){
+      document.body.style.background = "url('pics/thunderstorm.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Mist'){
+      document.body.style.background = "url('pics/mist.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Smoke'){
+      document.body.style.background = "url('pics/smoke.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else if(weather.weather[0].main === 'Fog'){
+      document.body.style.background = "url('pics/fog.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+    else{
+      document.body.style.background = "url('pics/default.jpg')";
+      document.body.style.backgroundSize = "cover";
+    }
+
     let city = document.querySelector('.location .city');
     city.innerText = `${weather.name}, ${weather.sys.country}`;
 

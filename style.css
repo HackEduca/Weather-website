@@ -5,7 +5,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-image: url(background.jpg);
+    
     background-size: cover;
     background-position: top center;
 }
@@ -109,26 +109,33 @@ main {
 
 .previous {
     align-items: left;
-    margin-right: 800px;
-    padding: 8px;
+    margin-left: 100px;
+    padding: 20px;
     color: rgb(226, 216, 216);
     
 }
 
-.previous .predate {
-    font-size: 50px;
+.future {
+    align-items: right;
+    margin-left: 1000px;
+    padding: 20px;
+    color: rgb(226, 216, 216);
+}
+
+.previous .predate, .predate1, .predate2, .postdate, .postdate1, .postdate2 {
+    font-size: 25px;
     font-style: italic;
     font-weight: 600;
 }
 
-.previous .pretype {
+.previous .pretype, .pretype1, .pretype2, .posttype, .posttype1, .posttype2 {
     padding: 10px;
     font-style: oblique;
     font-size: 30px;
     font-weight: 500;
 }
 
-.previous .prevary {
+.previous .prevary, .prevary1, .prevary2, .postvary, .postvary1, .postvary2 {
     padding: 10px;
     font-style: oblique;
     font-size: 32px;

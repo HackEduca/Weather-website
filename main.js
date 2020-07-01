@@ -1,4 +1,33 @@
-const api = {
+function showTime(){                      //to find exact time
+    var date = new Date();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    
+    
+  
+    if(h < 10){
+        h = "0" + h;
+    }
+  
+    if(m < 10){
+        m = "0" + m;
+    }
+  
+    if(s < 10){
+        s = "0" + s;
+    }
+  
+    var time = h + ":" + m + ":" + s;
+  
+    document.getElementById("clockdisplay").innerText = time;
+    document.getElementById("clockdisplay").textContent = time;  //to support in all browsers
+  
+    setTimeout(showTime, 1000);
+}
+  showTime();
+
+  const api = {
     key: "f50f60580f5345713a7c7c7bb2b0a605",
     base: "https://api.openweathermap.org/data/2.5/"
   }
@@ -106,16 +135,21 @@ function displayResults (weather) {    //to display the weather of desired locat
 
     let humi = document.querySelector('.current .humi');
     humi.innerHTML = `<span>Humidity ~ </span>${weather.main.humidity}`;
-
     
     
     getPrevious(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
     getPrevious1(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
     getPrevious2(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+    getPrevious3(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+    getPrevious4(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+
 
     getAfter(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
     getAfter1(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
     getAfter2(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+    getAfter3(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+    getAfter4(`${weather.coord.lat}`, `${weather.coord.lon}`, `${weather.dt}`);
+
 
 }
 
@@ -204,6 +238,64 @@ function displayXresults2(xweather2) {            //to display weather of previo
   
 }
 
+function getPrevious3(latp, longp, predate) {    //to fetch weather of previous days
+  predate = (predate - 86400*4);
+  
+  fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latp}&lon=${longp}&dt=${predate}&units=metric&appid=${api.key}`)
+  .then(function(presp3) {
+    return presp3.json();
+  })
+  .then(function(predata3) {
+    
+    displayXresults3(predata3);
+  })
+  .catch(function() {});
+}
+
+function displayXresults3(xweather3) {            //to display weather of previous days
+
+  let yesterday3 = new Date(new Date().getTime() - 86400000*4);
+  let predate3 = document.querySelector('.previous .predate3');
+  predate3.innerText = dateBuilder(yesterday3);
+
+  let prevary3 = document.querySelector('.previous .prevary3');
+  prevary3.innerHTML = `${xweather3.hourly[0].temp}°C / ${xweather3.hourly[23].temp}°C`;
+  
+  let pretype3 = document.querySelector('.previous .pretype3');
+  pretype3.innerHTML = `${xweather3.current.weather[0].main}`;
+
+  
+}
+
+function getPrevious4(latp, longp, predate) {    //to fetch weather of previous days
+  predate = (predate - 86400*5);
+  
+  fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${latp}&lon=${longp}&dt=${predate}&units=metric&appid=${api.key}`)
+  .then(function(presp4) {
+    return presp4.json();
+  })
+  .then(function(predata4) {
+    
+    displayXresults4(predata4);
+  })
+  .catch(function() {});
+}
+
+function displayXresults4(xweather4) {            //to display weather of previous days
+
+  let yesterday4 = new Date(new Date().getTime() - 86400000*5);
+  let predate4 = document.querySelector('.previous .predate4');
+  predate4.innerText = dateBuilder(yesterday4);
+
+  let prevary4 = document.querySelector('.previous .prevary4');
+  prevary4.innerHTML = `${xweather4.hourly[0].temp}°C / ${xweather4.hourly[23].temp}°C`;
+  
+  let pretype4 = document.querySelector('.previous .pretype4');
+  pretype4.innerHTML = `${xweather4.current.weather[0].main}`;
+
+  
+}
+
 function getAfter(lata, longa, postdate) {    //to fetch weather of future days
   postdate = (postdate + 86400);
   fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lata}&lon=${longa}&exclude=daily&units=metric&appid=${api.key}`)
@@ -284,6 +376,62 @@ function displayFresults2(aweather2) {            //to display weather of future
  
  let posttype2 = document.querySelector('.future .posttype2');
  posttype2.innerHTML = `${aweather2.current.weather[0].main}`;
+
+ 
+}
+
+function getAfter3(lata, longa, postdate) {    //to fetch weather of future days
+  postdate = (postdate + 86400*4);
+  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lata}&lon=${longa}&units=metric&appid=${api.key}`)
+  .then(function(aresp3) {
+    return aresp3.json();
+  })
+  .then(function(postdata3) {
+    
+    displayFresults3(postdata3);
+  })
+  .catch(function() {});
+}
+
+function displayFresults3(aweather3) {            //to display weather of future days
+
+ let tomorrow3 = new Date(new Date().getTime() + 86400000*4);
+ let postdate3 = document.querySelector('.future .postdate3');
+ postdate3.innerText = dateBuilder(tomorrow3);
+
+ let postvary3 = document.querySelector('.future .postvary3');
+ postvary3.innerHTML = `${aweather3.hourly[0].temp}°C / ${aweather3.hourly[23].temp}°C`;
+ 
+ let posttype3 = document.querySelector('.future .posttype3');
+ posttype3.innerHTML = `${aweather3.current.weather[0].main}`;
+
+ 
+}
+
+function getAfter4(lata, longa, postdate) {    //to fetch weather of future days
+  postdate = (postdate + 86400*5);
+  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lata}&lon=${longa}&units=metric&appid=${api.key}`)
+  .then(function(aresp4) {
+    return aresp4.json();
+  })
+  .then(function(postdata4) {
+    
+    displayFresults4(postdata4);
+  })
+  .catch(function() {});
+}
+
+function displayFresults4(aweather4) {            //to display weather of future days
+
+ let tomorrow4 = new Date(new Date().getTime() + 86400000*5);
+ let postdate4 = document.querySelector('.future .postdate4');
+ postdate4.innerText = dateBuilder(tomorrow4);
+
+ let postvary4 = document.querySelector('.future .postvary4');
+ postvary4.innerHTML = `${aweather4.hourly[0].temp}°C / ${aweather4.hourly[23].temp}°C`;
+ 
+ let posttype4 = document.querySelector('.future .posttype4');
+ posttype4.innerHTML = `${aweather4.current.weather[0].main}`;
 
  
 }
